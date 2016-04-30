@@ -1,17 +1,28 @@
 class MuLoop implements MuObject {
   TuioObject tobj; 
   Knob knob;
-  int volumeCtrl;
+  int volumeCtrl, reverbCtrl; //channel 3, 0-9 volumes, 10-19 reverb
+  int cubeId;
 
-  MuLoop(TuioObject tobj) {
+  MuLoop(TuioObject tobj, int cubeId) {
     this.tobj = tobj;
+    this.cubeId = cubeId;
+    
+    this.volumeCtrl = cubeId;
+    this.reverbCtrl = cubeId + 10;
+    
     init();
+  }
+  
+  MuObjectType getType(){
+    return MuObjectType.LOOP;
   }
 
   void beat() {
   }
 
   void update() {
+    
   }
 
   void init() {

@@ -10,6 +10,10 @@ class Instrument implements MuObject {
   
   void update(){
   }
+  
+  MuObjectType getType(){
+    return MuObjectType.INSTRUMENT;
+  }
 
   void beat(){
     waves.add(new Wave(0));

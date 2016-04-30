@@ -1,10 +1,17 @@
 class MuKnob implements MuObject {
   TuioObject tobj; 
   Knob knob;
+  int knobRadius;
+  int value;
 
   MuKnob(TuioObject tobj) {
     this.tobj = tobj;
+    this.knobRadius = 130;
     init();
+  }
+  
+  MuObjectType getType(){
+    return MuObjectType.KNOB;
   }
 
   void beat() {
@@ -13,9 +20,9 @@ class MuKnob implements MuObject {
   void init() {
     knob = cp5.addKnob(str(tobj.getSymbolID()))
       .setRange(0, 127)
-        .setValue(50)
-          .setPosition(100, 70)
-            .setRadius(130)
+        .setValue(value)
+          .setPosition(0, 0)
+            .setRadius(knobRadius)
               .setStringValue("")
                 .setColorBackground(color(255, 255, 255))
                   .setViewStyle(Knob.ARC)
@@ -27,10 +34,10 @@ class MuKnob implements MuObject {
     action();
   }
 
-  void display() {
+  void display() {    
     //knob.setVisible(true);
-    knob.setPosition(tobj.getScreenX(width), tobj.getScreenY(height));
-    knob.setValue(tobj.getAngle() / (2.0*PI)*127);
+    knob.setPosition(tobj.getScreenX(width) - knobRadius, tobj.getScreenY(height) - knobRadius);
+    knob.setValue(value);
   }
 
   void action() {
@@ -38,7 +45,7 @@ class MuKnob implements MuObject {
   }
 
   void update() {
-    int value = (int)(tobj.getAngle() / (2.0*PI)*127);
+    value = (int)(tobj.getAngle() / (2.0*PI)*127);
     mainBus.sendControllerChange(2, tobj.getSymbolID(), value); // Send a controllerChange
   }
 

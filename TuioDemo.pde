@@ -169,7 +169,8 @@ void draw()
 void addTuioObject(TuioObject tobj) {
   if (verbose) println("add obj "+tobj.getSymbolID()+" ("+tobj.getSessionID()+") "+tobj.getX()+" "+tobj.getY()+" "+tobj.getAngle());
 
-  muObjectMap.put(tobj.getSymbolID(), createMuObject(tobj));
+  if(muObjectMap.containsKey(tobj.getSymbolID()) == false)
+    muObjectMap.put(tobj.getSymbolID(), createMuObject(tobj));
 }
 
 // called when an object is moved

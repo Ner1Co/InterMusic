@@ -5,4 +5,5 @@ interface MuObject {
   void beat();
   void action();
   void update();
+  MuObjectType getType();
 }
