@@ -11,6 +11,12 @@ MuObject createMuObject(TuioObject tobj){
   else if(id == 100){
     return new MuGroupVolumeKnob(tobj);
   }
+  else if(id == 132){
+    return new MuPlay(tobj);
+  }
+  else if(id == 135){
+    return new Instrument(tobj);
+  }
   else if(id >= 100){
     return new MuKnob(tobj);
   } else {
@@ -23,5 +29,6 @@ enum MuObjectType {
   LOOP,
   KNOB,
   GROUP_KNOB,
-  INSTRUMENT
+  INSTRUMENT,
+  PLAY
 };

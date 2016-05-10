@@ -1,12 +1,15 @@
-import themidibus.*; //Import the library //<>// //<>// //<>//
-import java.util.Map;
+ //<>//
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.Iterator;
+import themidibus.*; //Import the library //<>// //<>//
+//import java.util.Map;
 import controlP5.*;
 
 ControlP5 cp5;
 
 MidiBus mainBus, perfBus;
 
-HashMap<Integer, MuObject> muObjectMap = new HashMap<Integer, MuObject>();
+ConcurrentHashMap<Integer, MuObject> muObjectMap = new ConcurrentHashMap<Integer, MuObject>();
 
 void noteOn(int channel, int pitch, int velocity) {
   // Receive a noteOn
@@ -29,6 +32,7 @@ void noteOff(int channel, int pitch, int velocity) {
 }
 
 boolean beatFrame = false;
+boolean calibrationMode = false;
 int beatValue = 0;
 
 void controllerChange(int channel, int number, int value) {
@@ -65,11 +69,16 @@ PFont font;
 float obj_size = object_size*scale_factor; 
 float cur_size = cursor_size*scale_factor; 
 
+PImage calibrationBg;
+
 boolean verbose = false; // print console debug messages
 boolean callback = true; // updates only after callbacks
 
 void setup()
 {
+  calibrationBg = loadImage("calibration.png");
+  calibrationBg.resize(displayWidth, displayHeight);
+  
   // GUI setup
   //noCursor();
   size(displayWidth, displayHeight, JAVA2D);
@@ -104,14 +113,19 @@ void setup()
 
 // within the draw method we retrieve an ArrayList of type <TuioObject>, <TuioCursor> or <TuioBlob>
 // from the TuioProcessing client and then loops over all lists to draw the graphical feedback.
+//Iterator<Map.Entry<Integer,MuObject>> it;
+Iterator it;
 void draw()
 {
-  background(255);
+  if(calibrationMode == true)
+    background(calibrationBg);
+  else background(255);
+  
   textFont(font, 18*scale_factor);
 
-  for (Map.Entry i : muObjectMap.entrySet ()) {
-    MuObject mobj = (MuObject) i.getValue();
-    mobj.display();
+  it = muObjectMap.keySet().iterator();
+  while (it.hasNext()){
+    muObjectMap.get(it.next()).display();
     //if (beatFrame == true) {
     //  mobj.beat();
     //}
@@ -236,4 +250,14 @@ void removeTuioBlob(TuioBlob tblb) {
 void refresh(TuioTime frameTime) {
   if (verbose) println("frame #"+frameTime.getFrameID()+" ("+frameTime.getTotalMilliseconds()+")");
   if (callback) redraw();
+}
+
+void keyPressed() {
+  if (key  == 'c') {
+    calibrationMode = !calibrationMode;
+  }
+  if (key  == 'p') {
+    mainBus.sendMessage(new byte[]{(byte)240,(byte)127,(byte)127,(byte)1,(byte)1,(byte)0,(byte)0,(byte)4,(byte)0,(byte)247});
+  }
+
 }

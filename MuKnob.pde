@@ -18,18 +18,27 @@ class MuKnob implements MuObject {
   }
 
   void init() {
-    knob = cp5.addKnob(str(tobj.getSymbolID()))
-      .setRange(0, 127)
-        .setValue(value)
-          .setPosition(0, 0)
-            .setRadius(knobRadius)
-              .setStringValue("")
-                .setColorBackground(color(255, 255, 255))
-                  .setViewStyle(Knob.ARC)
-                    .setDragDirection(Knob.VERTICAL);
+    // knob = cp5.addKnob(str(tobj.getSessionID()))
+    //   .setRange(0, 127)
+    //     .setValue(value)
+    //       .setPosition(0, 0)
+    //         .setRadius(knobRadius)
+    //           .setStringValue("")
+    //             .setColorBackground(color(255, 255, 255, 1))
+    //               .setViewStyle(Knob.ARC)
+    //                 .setDragDirection(Knob.VERTICAL);
 
-    knob.setLabelVisible(false);
-    knob.setVisible(true);
+    // knob.setLabelVisible(false);
+    // knob.setVisible(true);
+
+    knob = new CustomKnob(cp5, str(tobj.getSessionID()))
+    .setPosition(0, 0)
+    .setColorBackground(color(255, 255, 255, 1))
+    .setRadius(knobRadius)
+    .setRange(0, 127)
+    .setValue(value)
+    .setStringValue("")
+    .setLabelVisible(false);;
 
     action();
   }

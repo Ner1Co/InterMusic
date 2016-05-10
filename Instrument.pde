@@ -1,7 +1,8 @@
 class Instrument implements MuObject {
   TuioObject tobj; 
   Knob knob;
-  ArrayList waves = new ArrayList();
+  int value;
+  //ArrayList waves = new ArrayList();
 
   Instrument(TuioObject tobj) {
     this.tobj = tobj;
@@ -9,6 +10,10 @@ class Instrument implements MuObject {
   }
   
   void update(){
+    mainBus.sendNoteOff(0, value, 20);
+    value = (int)(tobj.getAngle() / (2.0*PI)*127);
+    print(value);
+    mainBus.sendNoteOn(0, value, 100);
   }
   
   MuObjectType getType(){
@@ -16,58 +21,46 @@ class Instrument implements MuObject {
   }
 
   void beat(){
-    waves.add(new Wave(0));
+  //  waves.add(new Wave(0));
   }
 
   void init() {
-    // knob = cp5.addKnob(str(tobj.getSymbolID()))
-    //   .setRange(0, 127)
-    //   .setValue(50)
-    //   .setPosition(100, 70)
-    //   .setRadius(130)
-    //   .setStringValue("")
-    //   .setColorBackground(color(255, 255, 255))
-    //   .setViewStyle(Knob.ARC)
-    //   .setDragDirection(Knob.VERTICAL);
-
-    // knob.setLabelVisible(false);
-    //knob.setVisible(false);
-    
-    waves.add(new Wave(0));
+    //waves.add(new Wave(0));
     action();
   }
 
   void display() {
     stroke(0);
-    fill(0, 0, 0);
+    fill(255, 220, 255);
+    //noFill();
+    strokeWeight(1);
     pushMatrix();
     translate(tobj.getScreenX(width), tobj.getScreenY(height));
     rotate(tobj.getAngle());
-    
-     for (int j = waves.size()-1; j >= 0; j--) {
-        Wave wave = (Wave) waves.get(j);
-        wave.display();
-        if (wave.power<=0) {
-            waves.remove(j);
-        }
-    }
 
-    // knob.setVisible(true);
-    // knob.setPosition(tobj.getScreenX(width), tobj.getScreenY(height));
-    // knob.setValue(tobj.getAngle() / (2.0*PI)*127);
-    
+    rect(-obj_size/2, -obj_size/2, obj_size, obj_size);
+
     popMatrix();
-    fill(255);
+    fill(0);
     text(""+tobj.getSymbolID(), tobj.getScreenX(width), tobj.getScreenY(height));
+    
+     // for (int j = waves.size()-1; j >= 0; j--) {
+     //    Wave wave = (Wave) waves.get(j);
+     //    wave.display();
+     //    if (wave.power<=0) {
+     //        waves.remove(j);
+     //    }
+    // }
   }
   
   void action(){
-       mainBus.sendNoteOn(0, tobj.getSymbolID(), 100);
+       value = (int)(tobj.getAngle() / (2.0*PI)*127);
+       mainBus.sendNoteOn(0, value, 100);
   }
   
   //TODO
   void dismiss(){
-    mainBus.sendControllerChange(0, tobj.getSymbolID(), 0);
+    mainBus.sendNoteOff(0, value, 0);
     //knob.remove();
   }
 }
