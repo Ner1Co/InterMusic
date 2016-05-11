@@ -107,18 +107,18 @@ these are four cubes, please note that we use four sides with different IDs
 here we create four pentagon shaped objects
 -->
 
-<object class="blue pentagon" fiducials="28" active="false" xpos="120" ypos="570" angle="0"/>
-<object class="red pentagon" fiducials="29" active="false" xpos="180" ypos="570" angle="0"/>
-<object class="yellow pentagon" fiducials="30" active="false" xpos="240" ypos="570" angle="0"/>
-<object class="green pentagon" fiducials="31" active="false" xpos="300" ypos="570" angle="0"/>
+<object class="red pentagon" fiducials="200" active="false" xpos="120" ypos="570" angle="0"/>
+<object class="blue pentagon" fiducials="201" active="false" xpos="180" ypos="570" angle="0"/>
+<object class="red pentagon" fiducials="202" active="false" xpos="240" ypos="570" angle="0"/>
+<object class="red pentagon" fiducials="203" active="false" xpos="300" ypos="570" angle="0"/>
 
 <!-- 
 and finally four star shaped objects
 -->
 
-<object class="blue star" fiducials="32" active="false" xpos="500" ypos="570" angle="0"/>
-<object class="red star" fiducials="33" active="false" xpos="560" ypos="570" angle="0"/>
-<object class="yellow star" fiducials="34" active="false" xpos="620" ypos="570" angle="0"/>
-<object class="green star" fiducials="35" active="false" xpos="685" ypos="570" angle="0"/>
+<object class="blue star" fiducials="132" active="false" xpos="500" ypos="570" angle="0"/>
+<object class="red star" fiducials="133" active="false" xpos="560" ypos="570" angle="0"/>
+<object class="yellow star" fiducials="134" active="false" xpos="620" ypos="570" angle="0"/>
+<object class="green star" fiducials="135" active="false" xpos="685" ypos="570" angle="0"/>
 
 </tuio>
