@@ -14,12 +14,25 @@ MuObject createMuObject(TuioObject tobj){
   else if(id == 132){
     return new MuPlay(tobj);
   }
-  else if(id == 135){
-    return new Instrument(tobj);
+  else if(id == 133){
+    return new Instrument(tobj, 0);
   }
+  else if(id == 134){
+    return new Instrument(tobj, 1);
+  }
+  else if(id == 135){
+    return new Instrument(tobj, 2);
+  }
+  else if(id == 200){
+    return new MuRecord(tobj);
+  } 
+  else if(id == 201){
+    return new MuBPM(tobj);
+  } 
   else if(id >= 100){
     return new MuKnob(tobj);
-  } else {
+  }
+  else {
     cubeId = id / 16;
     return new MuLoop(tobj, cubeId);
   }
@@ -30,5 +43,7 @@ enum MuObjectType {
   KNOB,
   GROUP_KNOB,
   INSTRUMENT,
-  PLAY
+  PLAY,
+  RECORD,
+  BPM
 };

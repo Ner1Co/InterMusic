@@ -14,9 +14,6 @@ class MuKnob implements MuObject {
     return MuObjectType.KNOB;
   }
 
-  void beat() {
-  }
-
   void init() {
     // knob = cp5.addKnob(str(tobj.getSessionID()))
     //   .setRange(0, 127)

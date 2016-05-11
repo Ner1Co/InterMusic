@@ -2,27 +2,25 @@ class Instrument implements MuObject {
   TuioObject tobj; 
   Knob knob;
   int value;
+  int channel;
   //ArrayList waves = new ArrayList();
 
-  Instrument(TuioObject tobj) {
+  Instrument(TuioObject tobj, int channel) {
     this.tobj = tobj;
+    this.channel = channel;
     init();
   }
   
   void update(){
-    mainBus.sendNoteOff(0, value, 20);
+    mainBus.sendNoteOff(channel, value, 20);
     value = (int)(tobj.getAngle() / (2.0*PI)*127);
-    print(value);
-    mainBus.sendNoteOn(0, value, 100);
+    mainBus.sendNoteOn(channel, value, 100);
   }
   
   MuObjectType getType(){
     return MuObjectType.INSTRUMENT;
   }
 
-  void beat(){
-  //  waves.add(new Wave(0));
-  }
 
   void init() {
     //waves.add(new Wave(0));
@@ -55,12 +53,11 @@ class Instrument implements MuObject {
   
   void action(){
        value = (int)(tobj.getAngle() / (2.0*PI)*127);
-       mainBus.sendNoteOn(0, value, 100);
+       mainBus.sendNoteOn(channel, value, 100);
   }
   
   //TODO
   void dismiss(){
-    mainBus.sendNoteOff(0, value, 0);
-    //knob.remove();
+    mainBus.sendNoteOff(channel, value, 0);
   }
 }

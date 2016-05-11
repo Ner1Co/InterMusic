@@ -31,7 +31,6 @@ void noteOff(int channel, int pitch, int velocity) {
   println("Velocity:"+velocity);
 }
 
-boolean beatFrame = false;
 boolean calibrationMode = false;
 int beatValue = 0;
 
@@ -44,8 +43,6 @@ void controllerChange(int channel, int number, int value) {
   println("Number:"+number);
   println("Value:"+value);
   beatValue = value;
-  if (number == 108)
-    beatFrame = true;
 }
 
 void delay(int time) {
@@ -126,14 +123,7 @@ void draw()
   it = muObjectMap.keySet().iterator();
   while (it.hasNext()){
     muObjectMap.get(it.next()).display();
-    //if (beatFrame == true) {
-    //  mobj.beat();
-    //}
   }
-
-  //if (beatFrame == true) {
-  //  beatFrame = false;
-  //}
 
   ArrayList<TuioCursor> tuioCursorList = tuioClient.getTuioCursorList();
   for (int i=0; i<tuioCursorList.size (); i++) {
@@ -257,7 +247,25 @@ void keyPressed() {
     calibrationMode = !calibrationMode;
   }
   if (key  == 'p') {
-    mainBus.sendMessage(new byte[]{(byte)240,(byte)127,(byte)127,(byte)1,(byte)1,(byte)0,(byte)0,(byte)4,(byte)0,(byte)247});
+   //int status_byte = 0xC0;
+   int status_byte = 192;
+  // This is the status byte for a program change
+  int channel = 0;
+  // We'll use channel 0
+  int byte1 = 2;
+  // This will be the preset you are sending with your program change
+  int byte2 = 0;
+  // This is not used for program change so ignore it and set it to 0
+
+  mainBus.sendMessage(status_byte, channel, byte1, byte2); 
+  //Send the custom message
+    
+    //mainBus.sendMessage(new byte[]{(byte)240,(byte)127,(byte)127,(byte)1,(byte)1,(byte)0,(byte)0,(byte)4,(byte)0,(byte)247});
+  }
+  
+  if(key == 'r'){
+  mainBus.sendMessage(176, 0, 117, 127);
+  mainBus.sendMessage(176, 0, 117, 0); 
   }
 
 }

@@ -1,7 +1,7 @@
-class MuPlay implements MuObject {
+class MuRecord implements MuObject {
   TuioObject tobj; 
 
-  MuPlay(TuioObject tobj) {
+  MuRecord(TuioObject tobj) {
     this.tobj = tobj;
 
     init();
@@ -12,13 +12,16 @@ class MuPlay implements MuObject {
   }
 
   void action() {
-    mainBus.sendMessage(251);
+    mainBus.sendMessage(176, 0, 114, 127); //back to start
+    mainBus.sendMessage(176, 0, 114, 0);
+    mainBus.sendMessage(176, 0, 117, 127);
+    mainBus.sendMessage(176, 0, 117, 0);
   }
-  
-  MuObjectType getType(){
-    return MuObjectType.PLAY;
+
+  MuObjectType getType() {
+    return MuObjectType.RECORD;
   }
-  
+
   void update() {
   }
 
@@ -40,6 +43,9 @@ class MuPlay implements MuObject {
 
   //TODO
   void dismiss() {
-    mainBus.sendMessage(252);
+    mainBus.sendMessage(176, 0, 117, 127);
+    mainBus.sendMessage(176, 0, 117, 0);
+    mainBus.sendMessage(176, 0, 114, 127); //back to start
+    mainBus.sendMessage(176, 0, 114, 0);
   }
 }

@@ -18,8 +18,6 @@ class MuLoop implements MuObject {
     return MuObjectType.LOOP;
   }
 
-  void beat() {
-  }
 
   void update() {
     
@@ -51,7 +49,7 @@ class MuLoop implements MuObject {
 
   //TODO
   void dismiss() {
-    perfBus.sendNoteOn(0, tobj.getSymbolID(), 0);
+    perfBus.sendNoteOn(0, 16*cubeId+8, 100);
     //knob.remove();
   }
 }
