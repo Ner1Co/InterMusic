@@ -2,6 +2,6 @@
 
 *Installation*
 
-- CCV - 1.5
+- ReactVision - 1.5.1 / 1.5
 - loopMIDI
 - TUIO (processing)
