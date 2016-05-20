@@ -1,11 +1,10 @@
-class MuKnob implements MuObject {
-  TuioObject tobj; 
+class MuKnob extends MuObject {
   Knob knob;
   int knobRadius;
   int value;
 
   MuKnob(TuioObject tobj) {
-    this.tobj = tobj;
+    super(tobj);
     this.knobRadius = 130;
     init();
   }
@@ -52,12 +51,12 @@ class MuKnob implements MuObject {
 
   void update() {
     value = (int)(tobj.getAngle() / (2.0*PI)*127);
-    mainBus.sendControllerChange(2, tobj.getSymbolID(), value); // Send a controllerChange
+    mainBus.sendControllerChange(3, tobj.getSymbolID(), value); // Send a controllerChange
   }
 
   //TODO
   void dismiss() {
-    mainBus.sendControllerChange(2, tobj.getSymbolID(), 0);
+    mainBus.sendControllerChange(3, tobj.getSymbolID(), 0);
     knob.remove();
   }
 }

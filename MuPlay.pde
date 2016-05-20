@@ -1,8 +1,7 @@
-class MuPlay implements MuObject {
-  TuioObject tobj; 
+class MuPlay extends MuObject {
 
   MuPlay(TuioObject tobj) {
-    this.tobj = tobj;
+    super(tobj);
 
     init();
   }

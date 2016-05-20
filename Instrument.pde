@@ -1,15 +1,24 @@
-class Instrument implements MuObject {
-  TuioObject tobj; 
+class Instrument extends Effected {
   Knob knob;
   int value;
   int channel;
   //ArrayList waves = new ArrayList();
-
+  
   Instrument(TuioObject tobj, int channel) {
-    this.tobj = tobj;
+    super(tobj);
     this.channel = channel;
+    
+    setChannels();
+      
     init();
   }
+  
+  void setChannels(){
+    this.volumeCtrl = tobj.getSymbolID();
+    this.reverbCtrl = tobj.getSymbolID() + 10;
+    this.gateCtrl = tobj.getSymbolID() + 20;
+  }
+
   
   void update(){
     mainBus.sendNoteOff(channel, value, 20);

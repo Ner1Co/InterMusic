@@ -1,19 +1,31 @@
 class MuGroupVolumeKnob extends MuGroupKnob{
   MuGroupVolumeKnob(TuioObject tobj){ super(tobj); }
   
-  void knobChange(MuLoop mloop){
-    mainBus.sendControllerChange(2, mloop.volumeCtrl, value);
+  void knobChange(Effected effected){
+    mainBus.sendControllerChange(2, effected.volumeCtrl, value);
   }
 }
 
 class MuGroupReverbKnob extends MuGroupKnob{
   MuGroupReverbKnob(TuioObject tobj){ super(tobj); }
   
-  void knobChange(MuLoop mloop){
-    mainBus.sendControllerChange(2, mloop.reverbCtrl, value);
+  void knobChange(Effected effected){
+    mainBus.sendControllerChange(2, effected.reverbCtrl, value);
   }
   
-  void knobRemove(MuLoop mloop){
-    mainBus.sendControllerChange(2, mloop.reverbCtrl, 0); 
+  void knobRemove(Effected effected){
+    mainBus.sendControllerChange(2, effected.reverbCtrl, 0); 
+  }
+}
+
+class MuGroupGateKnob extends MuGroupKnob{
+  MuGroupGateKnob(TuioObject tobj){ super(tobj); }
+  
+  void knobChange(Effected effected){
+    mainBus.sendControllerChange(2, effected.gateCtrl, value);
+  }
+  
+  void knobRemove(Effected effected){
+    mainBus.sendControllerChange(2, effected.gateCtrl, 0); 
   }
 }

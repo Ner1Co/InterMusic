@@ -1,21 +1,23 @@
-class MuLoop implements MuObject {
-  TuioObject tobj; 
-  Knob knob;
-  int volumeCtrl, reverbCtrl; //channel 3, 0-9 volumes, 10-19 reverb
+class MuLoop extends Effected {
   int cubeId;
 
   MuLoop(TuioObject tobj, int cubeId) {
-    this.tobj = tobj;
+    super(tobj);
     this.cubeId = cubeId;
     
-    this.volumeCtrl = cubeId;
-    this.reverbCtrl = cubeId + 10;
-    
+    setChannels();
+ 
     init();
   }
   
   MuObjectType getType(){
     return MuObjectType.LOOP;
+  }
+  
+  void setChannels(){
+    this.volumeCtrl = cubeId;
+    this.reverbCtrl = cubeId + 10;
+    this.gateCtrl = cubeId + 20;
   }
 
 
@@ -47,9 +49,7 @@ class MuLoop implements MuObject {
     perfBus.sendNoteOn(0, tobj.getSymbolID(), 100);
   }
 
-  //TODO
   void dismiss() {
     perfBus.sendNoteOn(0, 16*cubeId+8, 100);
-    //knob.remove();
   }
 }

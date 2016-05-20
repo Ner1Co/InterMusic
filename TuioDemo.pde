@@ -1,11 +1,12 @@
- //<>//
+ //<>// //<>//
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Iterator;
-import themidibus.*; //Import the library //<>// //<>//
+import themidibus.*; //Import the library //<>//
 //import java.util.Map;
 import controlP5.*;
 
 ControlP5 cp5;
+Panel panel;
 
 MidiBus mainBus, perfBus;
 
@@ -13,22 +14,22 @@ ConcurrentHashMap<Integer, MuObject> muObjectMap = new ConcurrentHashMap<Integer
 
 void noteOn(int channel, int pitch, int velocity) {
   // Receive a noteOn
-  println();
-  println("Note On:");
-  println("--------");
-  println("Channel:"+channel);
-  println("Pitch:"+pitch);
-  println("Velocity:"+velocity);
+  // println();
+  // println("Note On:");
+  // println("--------");
+  // println("Channel:"+channel);
+  // println("Pitch:"+pitch);
+  // println("Velocity:"+velocity);
 }
 
 void noteOff(int channel, int pitch, int velocity) {
   // Receive a noteOff
-  println();
-  println("Note Off:");
-  println("--------");
-  println("Channel:"+channel);
-  println("Pitch:"+pitch);
-  println("Velocity:"+velocity);
+  // println();
+  // println("Note Off:");
+  // println("--------");
+  // println("Channel:"+channel);
+  // println("Pitch:"+pitch);
+  // println("Velocity:"+velocity);
 }
 
 boolean calibrationMode = false;
@@ -75,7 +76,7 @@ void setup()
 {
   calibrationBg = loadImage("calibration.png");
   calibrationBg.resize(displayWidth, displayHeight);
-  
+
   // GUI setup
   //noCursor();
   size(displayWidth, displayHeight, JAVA2D);
@@ -106,6 +107,10 @@ void setup()
   tuioClient  = new TuioProcessing(this);
 
   cp5 = new ControlP5(this);
+  panel = new Panel();
+  
+  MuMusic.initMajor();
+ // MuMusic.initPentatonic();
 }
 
 // within the draw method we retrieve an ArrayList of type <TuioObject>, <TuioCursor> or <TuioBlob>
@@ -114,16 +119,22 @@ void setup()
 Iterator it;
 void draw()
 {
-  if(calibrationMode == true)
+  if (calibrationMode == true)
     background(calibrationBg);
   else background(255);
-  
+
   textFont(font, 18*scale_factor);
 
-  it = muObjectMap.keySet().iterator();
-  while (it.hasNext()){
-    muObjectMap.get(it.next()).display();
-  }
+  try {
+    it = muObjectMap.keySet().iterator();
+    while (it.hasNext ()) {
+      muObjectMap.get(it.next()).display();
+    }
+  } 
+  catch (Exception e) {
+    print("Exception!!");
+  } 
+
 
   ArrayList<TuioCursor> tuioCursorList = tuioClient.getTuioCursorList();
   for (int i=0; i<tuioCursorList.size (); i++) {
@@ -173,7 +184,7 @@ void draw()
 void addTuioObject(TuioObject tobj) {
   if (verbose) println("add obj "+tobj.getSymbolID()+" ("+tobj.getSessionID()+") "+tobj.getX()+" "+tobj.getY()+" "+tobj.getAngle());
 
-  if(muObjectMap.containsKey(tobj.getSymbolID()) == false)
+  if (muObjectMap.containsKey(tobj.getSymbolID()) == false)
     muObjectMap.put(tobj.getSymbolID(), createMuObject(tobj));
 }
 
@@ -181,8 +192,12 @@ void addTuioObject(TuioObject tobj) {
 void updateTuioObject (TuioObject tobj) {
   if (verbose) println("set obj "+tobj.getSymbolID()+" ("+tobj.getSessionID()+") "+tobj.getX()+" "+tobj.getY()+" "+tobj.getAngle()
     +" "+tobj.getMotionSpeed()+" "+tobj.getRotationSpeed()+" "+tobj.getMotionAccel()+" "+tobj.getRotationAccel());
-
-  muObjectMap.get(tobj.getSymbolID()).update();
+  try {
+    muObjectMap.get(tobj.getSymbolID()).update();
+  }
+  catch (Exception e) {
+    print("Exception!!");
+  }
 }
 
 // called when an object is removed from the scene
@@ -198,13 +213,45 @@ void removeTuioObject(TuioObject tobj) {
 void addTuioCursor(TuioCursor tcur) {
   if (verbose) println("add cur "+tcur.getCursorID()+" ("+tcur.getSessionID()+ ") " +tcur.getX()+" "+tcur.getY());
   //redraw();
+  
+  playNote(tcur);
 }
 
+int[] notesOn = new int[10];
 // called when a cursor is moved
 void updateTuioCursor (TuioCursor tcur) {
   if (verbose) println("set cur "+tcur.getCursorID()+" ("+tcur.getSessionID()+ ") " +tcur.getX()+" "+tcur.getY()
     +" "+tcur.getMotionSpeed()+" "+tcur.getMotionAccel());
   //redraw();
+  
+  playNote(tcur);
+}
+
+void playNote(TuioCursor tcur) {
+  if (tcur.getScreenX(width) >= panel.slider.getPosition().x &&  tcur.getScreenX(width) <= panel.slider.getPosition().x + panel.slider.getWidth() && 
+    tcur.getScreenY(height) >= panel.slider.getPosition().y &&  tcur.getScreenY(height) <= panel.slider.getPosition().y + panel.slider.getHeight()) {
+    float pit = -(panel.slider.getPosition().x - tcur.getScreenX(width)) / 2; 
+    float velocity = (panel.slider.getPosition().y - tcur.getScreenY(height) + 100);
+    
+    
+    float[] pos = {
+      pit, 100- velocity
+    };
+    
+    panel.slider.setArrayValue(pos);
+    
+    if((int)pit >= 0 && (int)pit < MuMusic.currentScale.length)
+      pit = MuMusic.currentScale[(int)pit];
+
+    //mainBus.sendNoteOff(0, notesOn[tcur.getCursorID()], 100);
+    int lastNote = notesOn[tcur.getCursorID()];
+    notesOn[tcur.getCursorID()] = (int)pit;
+    mainBus.sendNoteOn(0, (int)pit, (int)velocity);
+    
+    mainBus.sendNoteOff(0, lastNote, 100);
+  } else {
+    mainBus.sendNoteOff(0, notesOn[tcur.getCursorID()], 10);
+  }
 }
 
 // called when a cursor is removed from the scene
@@ -212,7 +259,7 @@ void removeTuioCursor(TuioCursor tcur) {
   if (verbose) println("del cur "+tcur.getCursorID()+" ("+tcur.getSessionID()+")");
 
   //int pit = tcur.getScreenX(width)/7;
-  //mainBus.sendNoteOff(0, pit, 0);
+  mainBus.sendNoteOff(0, notesOn[tcur.getCursorID()], 10);
 }
 
 // --------------------------------------------------------------
@@ -247,25 +294,24 @@ void keyPressed() {
     calibrationMode = !calibrationMode;
   }
   if (key  == 'p') {
-   //int status_byte = 0xC0;
-   int status_byte = 192;
-  // This is the status byte for a program change
-  int channel = 0;
-  // We'll use channel 0
-  int byte1 = 2;
-  // This will be the preset you are sending with your program change
-  int byte2 = 0;
-  // This is not used for program change so ignore it and set it to 0
+    //int status_byte = 0xC0;
+    int status_byte = 192;
+    // This is the status byte for a program change
+    int channel = 0;
+    // We'll use channel 0
+    int byte1 = 2;
+    // This will be the preset you are sending with your program change
+    int byte2 = 0;
+    // This is not used for program change so ignore it and set it to 0
 
-  mainBus.sendMessage(status_byte, channel, byte1, byte2); 
-  //Send the custom message
-    
+      mainBus.sendMessage(status_byte, channel, byte1, byte2); 
+    //Send the custom message
+
     //mainBus.sendMessage(new byte[]{(byte)240,(byte)127,(byte)127,(byte)1,(byte)1,(byte)0,(byte)0,(byte)4,(byte)0,(byte)247});
   }
-  
-  if(key == 'r'){
-  mainBus.sendMessage(176, 0, 117, 127);
-  mainBus.sendMessage(176, 0, 117, 0); 
-  }
 
+  if (key == 'r') {
+    mainBus.sendMessage(176, 0, 117, 127);
+    mainBus.sendMessage(176, 0, 117, 0);
+  }
 }

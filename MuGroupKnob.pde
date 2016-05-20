@@ -25,19 +25,19 @@ class MuGroupKnob extends MuKnob {
     Iterator it = muObjectMap.keySet().iterator();
     while (it.hasNext ()) {
       MuObject mobj =  muObjectMap.get(it.next());
-      if (mobj.getType() == MuObjectType.LOOP) {
-        MuLoop mloop = (MuLoop) mobj;
-        if (dist(tobj.getScreenX(width), tobj.getScreenY(height), mloop.tobj.getScreenX(width), mloop.tobj.getScreenY(height)) < radius/2) {
-          knobChange(mloop);
+      if (mobj.getType() == MuObjectType.LOOP || mobj.getType() == MuObjectType.INSTRUMENT) {
+        Effected effected = (Effected) mobj;
+        if (dist(tobj.getScreenX(width), tobj.getScreenY(height), effected.tobj.getScreenX(width), effected.tobj.getScreenY(height)) < radius/2) {
+          knobChange(effected);
         }
       }
     }
   }
 
-  void knobChange(MuLoop mloop) {
+  void knobChange(Effected effected) {
   }
 
-  void knobRemove(MuLoop mloop) {
+  void knobRemove(Effected effected) {
   }
 
   void knobRemoveAll() {
@@ -45,9 +45,9 @@ class MuGroupKnob extends MuKnob {
     while (it.hasNext ()) {
       MuObject mobj =  muObjectMap.get(it.next());
       if (mobj.getType() == MuObjectType.LOOP) {
-        MuLoop mloop = (MuLoop) mobj;
-        if (dist(tobj.getScreenX(width), tobj.getScreenY(height), mloop.tobj.getScreenX(width), mloop.tobj.getScreenY(height)) < radius/2) {
-          knobRemove(mloop);
+        Effected effected = (Effected) mobj;
+        if (dist(tobj.getScreenX(width), tobj.getScreenY(height), effected.tobj.getScreenX(width), effected.tobj.getScreenY(height)) < radius/2) {
+          knobRemove(effected);
         }
       }
     }

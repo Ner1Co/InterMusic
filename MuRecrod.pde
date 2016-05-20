@@ -1,8 +1,7 @@
-class MuRecord implements MuObject {
-  TuioObject tobj; 
+class MuRecord extends MuObject {
 
   MuRecord(TuioObject tobj) {
-    this.tobj = tobj;
+    super(tobj);
 
     init();
   }
