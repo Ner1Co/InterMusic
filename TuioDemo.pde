@@ -227,11 +227,14 @@ void updateTuioCursor (TuioCursor tcur) {
   playNote(tcur);
 }
 
+
 void playNote(TuioCursor tcur) {
-  if (tcur.getScreenX(width) >= panel.slider.getPosition().x &&  tcur.getScreenX(width) <= panel.slider.getPosition().x + panel.slider.getWidth() && 
-    tcur.getScreenY(height) >= panel.slider.getPosition().y &&  tcur.getScreenY(height) <= panel.slider.getPosition().y + panel.slider.getHeight()) {
-    float pit = -(panel.slider.getPosition().x - tcur.getScreenX(width)) / 2; 
-    float velocity = (panel.slider.getPosition().y - tcur.getScreenY(height) + 100);
+  float sliderX = panel.slider.x(panel.slider.getPosition());
+  float sliderY = panel.slider.y(panel.slider.getPosition());
+  if (tcur.getScreenX(width) >= sliderX &&  tcur.getScreenX(width) <= sliderX + panel.slider.getWidth() && 
+    tcur.getScreenY(height) >= sliderY &&  tcur.getScreenY(height) <= sliderY + panel.slider.getHeight()) {
+    float pit = -(sliderX - tcur.getScreenX(width)) / 2; 
+    float velocity = (sliderY - tcur.getScreenY(height) + 100);
     
     
     float[] pos = {

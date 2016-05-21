@@ -17,7 +17,7 @@ class CustomKnob extends Knob {
 
     // replace the default view with a custom view.
     setView(new ControllerView() {
-      public void display(PApplet p, Object b) {        
+      public void display(PGraphics p, Object b) {        
         translate( ( int ) getRadius( ) , ( int ) getRadius( ) );
 
       pushMatrix( );
