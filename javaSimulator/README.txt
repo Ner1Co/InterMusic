@@ -26,7 +26,7 @@ simulation, which is also included in the TUIO specification.
 Application Start:
 ------------------
 This application is based on the Java programming language.
-It needs a Java Runtime Environment version 1.5 or later 
+It needs a Java Runtime Environment version 1.5 or later-
 installed on your system in order to function properly.
 See: http://java.sun.com/j2se/
 
