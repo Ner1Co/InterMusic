@@ -1,5 +1,5 @@
 TUIO SIMULATOR
---------------
+---------------
 Copyright (c) 2005-2009 Martin Kaltenbrunner <mkalten@iua.upf.edu>
 This software is part of reacTIVision, an open source fiducial
 tracking and multi-touch framework based on computer vision. 
