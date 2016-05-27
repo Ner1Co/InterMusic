@@ -14,35 +14,29 @@ class MuKnob extends MuObject {
   }
 
   void init() {
-    // knob = cp5.addKnob(str(tobj.getSessionID()))
-    //   .setRange(0, 127)
-    //     .setValue(value)
-    //       .setPosition(0, 0)
-    //         .setRadius(knobRadius)
-    //           .setStringValue("")
-    //             .setColorBackground(color(255, 255, 255, 1))
-    //               .setViewStyle(Knob.ARC)
-    //                 .setDragDirection(Knob.VERTICAL);
 
-    // knob.setLabelVisible(false);
-    // knob.setVisible(true);
-
-    knob = new CustomKnob(cp5, str(tobj.getSessionID()))
+    knob = (CustomKnob)cp5.get(str(tobj.getSymbolID()));
+    if(knob == null){
+      println("new one");
+     knob = new CustomKnob(cp5, str(tobj.getSymbolID()))
     .setPosition(0, 0)
     .setColorBackground(color(255, 255, 255, 1))
     .setRadius(knobRadius)
     .setRange(0, 127)
     .setValue(value)
     .setStringValue("")
-    .setLabelVisible(false);;
-
+    .setLabelVisible(false);
+    } else{
+      knob.setVisible(true);
+    }
+    
     action();
   }
 
   void display() {    
     //knob.setVisible(true);
-    knob.setPosition(tobj.getScreenX(width) - knobRadius, tobj.getScreenY(height) - knobRadius);
-    knob.setValue(value);
+   knob.setPosition(tobj.getScreenX(width) - knobRadius, tobj.getScreenY(height) - knobRadius);
+   knob.setValue(value);
   }
 
   void action() {
@@ -57,6 +51,7 @@ class MuKnob extends MuObject {
   //TODO
   void dismiss() {
     mainBus.sendControllerChange(3, tobj.getSymbolID(), 0);
-    knob.remove();
+    knob.setVisible(false);
+    //knob.remove();
   }
 }

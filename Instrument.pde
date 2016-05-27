@@ -17,13 +17,14 @@ class Instrument extends Effected {
     this.volumeCtrl = tobj.getSymbolID();
     this.reverbCtrl = tobj.getSymbolID() + 10;
     this.gateCtrl = tobj.getSymbolID() + 20;
+    this.equalizerCtrl = tobj.getSymbolID() + 30;
   }
 
   
   void update(){
-    mainBus.sendNoteOff(channel, value, 20);
+    mainBus.sendNoteOff(channel, MuMusic.currentScale[(int)value], 20);
     value = (int)(tobj.getAngle() / (2.0*PI)*127);
-    mainBus.sendNoteOn(channel, value, 100);
+    mainBus.sendNoteOn(channel, MuMusic.currentScale[(int)value], 100);
   }
   
   MuObjectType getType(){
@@ -45,7 +46,8 @@ class Instrument extends Effected {
     translate(tobj.getScreenX(width), tobj.getScreenY(height));
     rotate(tobj.getAngle());
 
-    rect(-obj_size/2, -obj_size/2, obj_size, obj_size);
+    //rect(-obj_size/2, -obj_size/2, obj_size, obj_size);
+    polygon(0, 0, obj_size, 6);
 
     popMatrix();
     fill(0);
@@ -62,11 +64,11 @@ class Instrument extends Effected {
   
   void action(){
        value = (int)(tobj.getAngle() / (2.0*PI)*127);
-       mainBus.sendNoteOn(channel, value, 100);
+       mainBus.sendNoteOn(channel, MuMusic.currentScale[(int)value], 100);
   }
   
   //TODO
   void dismiss(){
-    mainBus.sendNoteOff(channel, value, 0);
+    mainBus.sendNoteOff(channel, MuMusic.currentScale[(int)value], 0);
   }
 }

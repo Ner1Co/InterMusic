@@ -19,8 +19,8 @@ class Panel {
      bpm = cp5.addSlider("slider")
        .setPosition(displayWidth / 2 - 200, displayHeight - 130)
        .setSize(200,20)
-       .setRange(0,200)
-       .setValue(128);
+       .setRange(0,127)
+       .setValue(50);
 
     smooth();
   }

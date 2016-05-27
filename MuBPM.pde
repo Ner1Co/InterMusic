@@ -13,6 +13,11 @@ class MuBPM extends MuKnob {
   MuObjectType getType() {
     return MuObjectType.BPM;
   }
+  
+  void update(){
+    super.update();
+    panel.bpm.setValue(value);
+  }
 
   void display() {
     super.display();
@@ -26,6 +31,6 @@ class MuBPM extends MuKnob {
 
   //TODO
   void dismiss() {
-    knob.remove();
+    knob.setVisible(false);
   }
 }

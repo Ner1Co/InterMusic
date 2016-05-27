@@ -18,6 +18,7 @@ class MuLoop extends Effected {
     this.volumeCtrl = cubeId;
     this.reverbCtrl = cubeId + 10;
     this.gateCtrl = cubeId + 20;
+    this.equalizerCtrl = cubeId + 30;
   }
 
 

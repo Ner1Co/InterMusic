@@ -1,3 +1,43 @@
+void createKnobs(){
+   int knobRadius = 130;
+  for(int i = 85; i <= 89; i++){
+    new CustomKnob(cp5, str(i))
+    .setPosition(0, 0)
+    .setColorBackground(color(255, 255, 255, 1))
+    .setRadius(knobRadius)
+    .setRange(0, 127)
+    .setValue(100)
+    .setStringValue("")
+    .setVisible(false)
+    .setLabelVisible(false);
+  }
+  
+  new CustomKnob(cp5, str(11))
+    .setPosition(0, 0)
+    .setColorBackground(color(255, 255, 255, 1))
+    .setRadius(knobRadius)
+    .setRange(0, 127)
+    .setValue(100)
+    .setStringValue("")
+    .setVisible(false)
+    .setLabelVisible(false);
+}
+
+void createGroupKnobs(){
+  int knobRadius = 130;
+  for(int i = 90; i <= 94; i++){
+    new CustomKnob(cp5, str(i))
+    .setPosition(0, 0)
+    .setColorBackground(color(255, 255, 255, 1))
+    .setRadius(knobRadius)
+    .setRange(0, 127)
+    .setValue(100)
+    .setStringValue("")
+    .setVisible(false)
+    .setLabelVisible(false);
+  }
+}
+
 MuObject createMuObject(TuioObject tobj){
   int id = tobj.getSymbolID();
   int cubeId;
@@ -21,6 +61,7 @@ MuObject createMuObject(TuioObject tobj){
   //volume 91-92
   //gate 93
   //time 94
+  //equliazer 95
   //generic effect knobs: find some
   
   //instrments
@@ -40,6 +81,9 @@ MuObject createMuObject(TuioObject tobj){
   }
   else if(id == 93){
     return new MuGroupGateKnob(tobj);
+  }
+  else if(id == 95){
+    return new MuGroupEqualizerKnob(tobj);
   }
   else if(id == 10){
     return new MuPlay(tobj);

@@ -17,7 +17,7 @@ static class MuMusic{
   
   
   
-  static int[] currentScale = new int[100];
+  static int[] currentScale = new int[127];
   
   static void initScale(int[] scale){
     for(int i=0; i < currentScale.length - scale.length; i+=scale.length){
@@ -32,5 +32,10 @@ static class MuMusic{
   
   static void initPentatonic(){
     initScale(pentatonic);
+  }
+  
+  static void initMinor(){
+    initScale(minor);
+     println(currentScale.length);
   }
 }

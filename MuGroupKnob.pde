@@ -56,6 +56,7 @@ class MuGroupKnob extends MuKnob {
   //TODO
   void dismiss() {
     knobRemoveAll();
-    knob.remove();
+    knob.setVisible(false);
+    //knob.remove();
   }
 }

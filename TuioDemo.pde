@@ -68,6 +68,7 @@ float obj_size = object_size*scale_factor;
 float cur_size = cursor_size*scale_factor; 
 
 PImage calibrationBg;
+PImage[] gates = new PImage[36];
 
 boolean verbose = false; // print console debug messages
 boolean callback = true; // updates only after callbacks
@@ -76,6 +77,9 @@ void setup()
 {
   calibrationBg = loadImage("calibration.png");
   calibrationBg.resize(displayWidth, displayHeight);
+  
+  for(int i=0; i <= 35; i++)
+    gates[i] = loadImage("gates/gate" + i + ".png");
 
   // GUI setup
   //noCursor();
@@ -105,12 +109,16 @@ void setup()
   // since we add "this" class as an argument the TuioProcessing class expects
   // an implementation of the TUIO callback methods in this class (see below)
   tuioClient  = new TuioProcessing(this);
+  
+  MuMusic.initMinor();
+  //MuMusic.initMajor();
+ // MuMusic.initPentatonic();
 
   cp5 = new ControlP5(this);
   panel = new Panel();
   
-  MuMusic.initMajor();
- // MuMusic.initPentatonic();
+  createKnobs();
+  createGroupKnobs();
 }
 
 // within the draw method we retrieve an ArrayList of type <TuioObject>, <TuioCursor> or <TuioBlob>
@@ -132,7 +140,7 @@ void draw()
     }
   } 
   catch (Exception e) {
-    print("Exception!!");
+    print(e);
   } 
 
 
@@ -317,4 +325,15 @@ void keyPressed() {
     mainBus.sendMessage(176, 0, 117, 127);
     mainBus.sendMessage(176, 0, 117, 0);
   }
+}
+
+void polygon(float x, float y, float radius, int npoints) {
+  float angle = TWO_PI / npoints;
+  beginShape();
+  for (float a = 0; a < TWO_PI; a += angle) {
+    float sx = x + cos(a) * radius;
+    float sy = y + sin(a) * radius;
+    vertex(sx, sy);
+  }
+  endShape(CLOSE);
 }
