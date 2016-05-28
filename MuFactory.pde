@@ -88,7 +88,7 @@ MuObject createMuObject(TuioObject tobj){
   else if(id == 10){
     return new MuPlay(tobj);
   }
-    else if(id == 11){
+    else if(id == 9){
     return new MuBPM(tobj);
   } 
     else if(id == 12){

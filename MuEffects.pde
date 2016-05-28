@@ -60,6 +60,6 @@ class MuGroupGateKnob extends MuGroupKnob{
   }
   
   void knobRemove(Effected effected){
-    mainBus.sendControllerChange(2, effected.gateCtrl, 0); 
+    //mainBus.sendControllerChange(2, effected.gateCtrl, 0); 
   }
 }
