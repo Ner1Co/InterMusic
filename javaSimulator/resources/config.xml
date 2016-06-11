@@ -87,9 +87,9 @@ here we create 2x four rounded squares, please note that you can actually repeat
 <object class="red round" fiducials="9" active="false" xpos="50" ypos="220" angle="0"/>
 <object class="red round" fiducials="9" active="false" xpos="50" ypos="280" angle="0"/>
 
-<object class="yellow round" fiducials="0" active="false" xpos="50" ypos="340" angle="0"/>
-<object class="yellow round" fiducials="0" active="false" xpos="50" ypos="400" angle="0"/>
-<object class="green round" fiducials="0" active="false" xpos="50" ypos="460" angle="0"/>
+<object class="yellow round" fiducials="98" active="false" xpos="50" ypos="340" angle="0"/>
+<object class="yellow round" fiducials="97" active="false" xpos="50" ypos="400" angle="0"/>
+<object class="green round" fiducials="99" active="false" xpos="50" ypos="460" angle="0"/>
 <object class="green round" fiducials="0" active="false" xpos="50" ypos="520" angle="0"/>
 
 <!-- 

@@ -25,7 +25,7 @@ class MuBPM extends MuKnob {
     if(alpha < beatValue+193)
       alpha+=10;
     else alpha-=10;
-    fill(50, 100, 50, alpha);
+    fill(10, 100, 10, alpha);
     ellipse(tobj.getScreenX(width), tobj.getScreenY(height), radius, radius);
   }
 

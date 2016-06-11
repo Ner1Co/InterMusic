@@ -39,9 +39,9 @@ class CustomKnob extends Knob {
         ellipse( getRadius( ) * 0.75f , 0 , getRadius( ) * 0.2f , getRadius( ) * 0.2f );
       } else if ( getViewStyle( ) == Controller.ARC ) {
         fill( c );
-        arc( 0 , 0 , getRadius( ) * 1.0f , getRadius( ) * 1.0f , getStartAngle( ) , getAngle( ) + ( ( getStartAngle( ) == getAngle( ) ) ? 0.06f : 0f ) );
+        arc( 0 , 0 , getRadius( ) * 1.4f , getRadius( ) * 1.4f , getStartAngle( ) , getAngle( ) + ( ( getStartAngle( ) == getAngle( ) ) ? 0.06f : 0f ) );
         fill( red( getColor( ).getBackground( ) ) , green( getColor( ).getBackground( ) ) , blue( getColor( ).getBackground( ) ) , 255 );
-        ellipse( 0 , 0 , getRadius( ) * 0.8f , getRadius( ) * 0.8f );
+        ellipse( 0 , 0 , getRadius( ) * 1.2f , getRadius( ) * 1.2f );
       }
       popMatrix( );
 

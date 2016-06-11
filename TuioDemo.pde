@@ -37,12 +37,12 @@ int beatValue = 0;
 
 void controllerChange(int channel, int number, int value) {
   // Receive a controllerChange
-  println();
-  println("Controller Change:");
-  println("--------");
-  println("Channel:"+channel);
-  println("Number:"+number);
-  println("Value:"+value);
+  // println();
+  // println("Controller Change:");
+  // println("--------");
+  // println("Channel:"+channel);
+  // println("Number:"+number);
+  // println("Value:"+value);
   beatValue = value;
 }
 
@@ -59,7 +59,7 @@ TuioProcessing tuioClient;
 // these are some helper variables which are used
 // to create scalable graphical feedback
 float cursor_size = 15;
-float object_size = 105;
+float object_size = 60;
 float table_size = 760;
 float scale_factor = 1;
 PFont font;
@@ -108,19 +108,14 @@ void setup()
   // finally we create an instance of the TuioProcessing client
   // since we add "this" class as an argument the TuioProcessing class expects
   // an implementation of the TUIO callback methods in this class (see below)
-    
-  //MuMusic.initMinor();
+  tuioClient  = new TuioProcessing(this);
+  
+  MuMusic.initMinor();
   //MuMusic.initMajor();
- MuMusic.initPentatonic();
+ // MuMusic.initPentatonic();
 
   cp5 = new ControlP5(this);
   panel = new Panel();
-  tuioClient  = new TuioProcessing(this);
-
-
-
-  
-
   
   createKnobs();
   createGroupKnobs();
@@ -237,7 +232,7 @@ void updateTuioCursor (TuioCursor tcur) {
     +" "+tcur.getMotionSpeed()+" "+tcur.getMotionAccel());
   //redraw();
   
-  //playNote(tcur);
+  playNote(tcur);
 }
 
 
@@ -262,11 +257,11 @@ void playNote(TuioCursor tcur) {
     //mainBus.sendNoteOff(0, notesOn[tcur.getCursorID()], 100);
     int lastNote = notesOn[tcur.getCursorID()];
     notesOn[tcur.getCursorID()] = (int)pit;
-    mainBus.sendNoteOn(2, (int)pit, (int)velocity);
+    mainBus.sendNoteOn(0, (int)pit, (int)velocity);
     
-    mainBus.sendNoteOff(2, lastNote, 100);
+    mainBus.sendNoteOff(0, lastNote, 100);
   } else {
-    mainBus.sendNoteOff(2, notesOn[tcur.getCursorID()], 10);
+    mainBus.sendNoteOff(0, notesOn[tcur.getCursorID()], 10);
   }
 }
 
