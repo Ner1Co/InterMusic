@@ -9,16 +9,17 @@ class Panel {
 
   void init() {
     slider = cp5.addSlider2D("wave")
-      .setPosition(displayWidth / 2 + 100, displayHeight - 130)
+      .setPosition(0 + 20, 0 + 280)
         .setSize(300, 100)
+        .setColorBackground(color(230,230,255,100))
         .setArrayValue(new float[] {50, 50})
       //.disableCrosshair()
       ;
       
               
      bpm = cp5.addSlider("slider")
-       .setPosition(displayWidth / 2 - 200, displayHeight - 130)
-       .setSize(200,20)
+       .setPosition(0 + 20, 0 + 250)
+       .setSize(300,20)
        .setRange(0,127)
        .setValue(50);
 
