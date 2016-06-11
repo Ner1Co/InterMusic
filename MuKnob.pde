@@ -40,7 +40,8 @@ class MuKnob extends MuObject {
   }
 
   void action() {
-    
+     value = (int)(tobj.getAngle() / (2.0*PI)*127);  
+     knob.setValue(value);
   }
 
   void update() {

@@ -12,20 +12,20 @@ void createKnobs(){
     .setLabelVisible(false);
   }
   
-  // new CustomKnob(cp5, str(98))
-  //   .setPosition(0, 0)
-  //   .setColorBackground(color(255, 255, 255, 1))
-  //   .setRadius(knobRadius)
-  //   .setRange(0, 127)
-  //   .setValue(100)
-  //   .setStringValue("")
-  //   .setVisible(false)
-  //   .setLabelVisible(false);
+  new CustomKnob(cp5, str(11))
+    .setPosition(0, 0)
+    .setColorBackground(color(255, 255, 255, 1))
+    .setRadius(knobRadius)
+    .setRange(0, 127)
+    .setValue(100)
+    .setStringValue("")
+    .setVisible(false)
+    .setLabelVisible(false);
 }
 
 void createGroupKnobs(){
   int knobRadius = 130;
-  for(int i = 90; i <= 99; i++){
+  for(int i = 90; i <= 94; i++){
     new CustomKnob(cp5, str(i))
     .setPosition(0, 0)
     .setColorBackground(color(255, 255, 255, 1))
@@ -54,15 +54,14 @@ MuObject createMuObject(TuioObject tobj){
   
   //effects + knobs
     //generic knobs: 85-89
-  //bpm - 98
+  //bpm - 11
   //start - 10
   //record - 12
   //reverb 90
   //volume 91-92
   //gate 93
   //time 94
-  //equliazer 97
-  //delay 99
+  //equliazer 95
   //generic effect knobs: find some
   
   //instrments
@@ -83,16 +82,13 @@ MuObject createMuObject(TuioObject tobj){
   else if(id == 93){
     return new MuGroupGateKnob(tobj);
   }
-  else if(id == 97){
+  else if(id == 95){
     return new MuGroupEqualizerKnob(tobj);
-  }
-  else if(id == 99){
-    return new MuGroupDelayKnob(tobj);
   }
   else if(id == 10){
     return new MuPlay(tobj);
   }
-    else if(id == 11){
+    else if(id == 9){
     return new MuBPM(tobj);
   } 
     else if(id == 12){
