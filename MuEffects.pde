@@ -21,6 +21,21 @@ class MuGroupVolumeKnob extends MuGroupKnob{
   }
 }
 
+class MuGroupDelayKnob extends MuGroupKnob{
+  void display() {
+    knob.setPosition(tobj.getScreenX(width) - knobRadius, tobj.getScreenY(height) - knobRadius);
+    knob.setValue(value);
+    fill(0, 255, 255, 60);
+    ellipse(tobj.getScreenX(width), tobj.getScreenY(height), radius, radius);
+  }
+  
+  MuGroupDelayKnob(TuioObject tobj){ super(tobj); }
+  
+  void knobChange(Effected effected){
+    mainBus.sendControllerChange(2, effected.delayCtrl, value);
+  }
+}
+
 class MuGroupReverbKnob extends MuGroupKnob{
   MuGroupReverbKnob(TuioObject tobj){ super(tobj); }
   
@@ -60,6 +75,6 @@ class MuGroupGateKnob extends MuGroupKnob{
   }
   
   void knobRemove(Effected effected){
-    //mainBus.sendControllerChange(2, effected.gateCtrl, 0); 
+   // mainBus.sendControllerChange(2, effected.gateCtrl, 0); 
   }
 }
